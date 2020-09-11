@@ -37,6 +37,18 @@ describe('svgPathToCssPolygon', () => {
     )
   })
 
+  it('works with horizontal lineto commands', () => {
+    expect(svgPathToCssPolygon(easyViewbox, 'M 0 0 H 10 l 10 10 L 0 50 Z')).toEqual(
+      'polygon(0% 0%, 10% 0%, 20% 10%, 0% 50%)'
+    )
+  })
+
+  it('works with vertical lineto commands', () => {
+    expect(svgPathToCssPolygon(easyViewbox, 'M 0 0 V 10 l 10 10 L 0 50 Z')).toEqual(
+      'polygon(0% 0%, 0% 10%, 10% 20%, 0% 50%)'
+    )
+  })
+
   it('works with centered viewboxes', () => {
     expect(svgPathToCssPolygon(centeredViewbox, 'M 0 0 l 10 10 l 10 10 L 0 50 Z')).toEqual(
       'polygon(50% 50%, 60% 60%, 70% 70%, 50% 100%)'
@@ -53,7 +65,7 @@ describe('svgPathToCssPolygon', () => {
     expect(() =>
       svgPathToCssPolygon(easyViewbox, 'M 0 0 C 0 0 0 0 0 0 L 0 50 Z')
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Invariant failed: Curved SVG paths cannot be turned into CSS polygons."`
+      `"Invariant failed: Unsupported SVG command: curveto (\\"C\\"). Paths containing curves cannot be turned into SVG polygons."`
     )
   })
 })

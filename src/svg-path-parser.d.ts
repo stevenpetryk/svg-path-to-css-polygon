@@ -1,32 +1,35 @@
 declare module 'svg-path-parser' {
   type XYCommand = {
-    code: 'M' | 'm' | 'L' | 'l';
-    command: 'moveto' | 'lineto';
-    relative: boolean | undefined;
-    x: number;
-    y: number;
-  };
-
-  type CurveCommand = {
-    code: 'C' | 'c';
-    command: 'curveto';
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
-    x: 0;
-    y: 0;
-  };
+    code: 'M' | 'm' | 'L' | 'l'
+    command: 'moveto' | 'lineto'
+    relative: boolean | undefined
+    x: number
+    y: number
+  }
 
   type ClosePathCommand = {
-    code: 'Z';
-    command: 'closepath';
-    relative: boolean | undefined;
-  };
+    code: 'Z'
+    command: 'closepath'
+    relative: boolean | undefined
+  }
+
+  type HorizontalLineCommand = {
+    code: 'H' | 'v'
+    command: 'horizontal lineto'
+    relative: boolean | undefined
+    x: number
+  }
+
+  type VerticalLineCommand = {
+    code: 'H' | 'v'
+    command: 'vertical lineto'
+    relative: boolean | undefined
+    y: number
+  }
 
   const svgParse: (
     d: string
-  ) => (XYCommand | CurveCommand | ClosePathCommand)[];
+  ) => (XYCommand | ClosePathCommand | HorizontalLineCommand | VerticalLineCommand)[]
 
-  export default svgParse;
+  export default svgParse
 }

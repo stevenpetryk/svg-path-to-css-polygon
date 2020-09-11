@@ -24,7 +24,14 @@ export default function svgPathToCssPolygon(viewbox: Viewbox, d: string): string
   const commands = parseSVG(d)
 
   commands.forEach(command => {
-    invariant(command.command != 'curveto', 'Curved SVG paths cannot be turned into CSS polygons.')
+    invariant(
+      command.command === 'moveto' ||
+        command.command === 'lineto' ||
+        command.command === 'horizontal lineto' ||
+        command.command === 'vertical lineto' ||
+        command.command === 'closepath',
+      `Unsupported SVG command: ${command.command} ("${command.code}"). Paths containing curves cannot be turned into SVG polygons.`
+    )
 
     // CSS polygons close automatically, so we can ignore the closepath command
     if (command.command === 'closepath') {
@@ -33,6 +40,14 @@ export default function svgPathToCssPolygon(viewbox: Viewbox, d: string): string
 
     const prevX = points[points.length - 1]?.x || 0
     const prevY = points[points.length - 1]?.y || 0
+
+    if (command.command === 'horizontal lineto') {
+      command = { ...command, command: 'lineto', code: 'L', y: 0 }
+    }
+
+    if (command.command === 'vertical lineto') {
+      command = { ...command, command: 'lineto', code: 'L', x: 0 }
+    }
 
     const nextX = command.x + (command.relative ? prevX : 0)
     const nextY = command.y + (command.relative ? prevY : 0)
