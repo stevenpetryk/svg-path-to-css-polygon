@@ -1,0 +1,39 @@
+{
+  "version": "0.1.0",
+  "license": "WTFPL",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "name": "svg-path-to-css-polygon",
+  "author": "Steven Petryk",
+  "module": "dist/svg-path-to-css-polygon.esm.js",
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "svg-path-parser": "^1.1.0",
+    "tiny-invariant": "^1.1.0"
+  }
+}
